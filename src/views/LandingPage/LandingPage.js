@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../../sharedComponents/Header/Header';
 import { Box, Container, Typography } from '@mui/material';
 import './landingPage.css'
+import MovieCard from '../../sharedComponents/MovieCard/MovieCard';
 
 const LandingPage = () => {
+  useEffect(() => {
+
+
+  }, [])
+
   return (
     <>
       <Header />
@@ -15,7 +21,10 @@ const LandingPage = () => {
           </Box>
         </Box>
         <Box mt={2}>
-          <Typography variant="h4">What's Popular</Typography>
+          <Typography variant="h4">Trending</Typography>
+        </Box>
+        <Box>
+          <MovieCard />
         </Box>
       </Container>
 
