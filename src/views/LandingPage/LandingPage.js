@@ -1,13 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../sharedComponents/Header/Header';
 import { Box, Container, Typography } from '@mui/material';
 import './landingPage.css'
 import MovieCard from '../../sharedComponents/MovieCard/MovieCard';
+import { getServerData } from '../../services/api';
+import { useDispatch } from 'react-redux';
+import { getPopularMovies, getLatestMovies } from '../../redux/actionCreator/actionCreator';
+
 
 const LandingPage = () => {
+
+  const dispatch = useDispatch()
+
   useEffect(() => {
-
-
+    dispatch(getLatestMovies())
   }, [])
 
   return (
