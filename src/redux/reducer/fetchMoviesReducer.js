@@ -3,22 +3,23 @@ import ACTION_FILTERS from '../app.constants'
 
 const initialState = {
     popularMovies: [],
-    upcomingMovies: []
+    latestMovies: []
 }
 
-
+console.log('store outer', initialState);
 export const fetchMoviesReducer = (state = initialState, action) => {
-    console.log("movie reducer", action.type);
+    console.log("movie reducer", action.payload);
+    console.log('store', state);
     switch (action.type) {
         case ACTION_FILTERS.SET_POPULAR_MOVIES_SUCCESS:
             return {
                 ...state,
-                popularMovies: [...state.popularMovies, action.payload]
+                popularMovies: [...action.payload]
             }
         case ACTION_FILTERS.SET_LATEST_MOVIES_SUCCESS:
             return {
                 ...state,
-                upcomingMovies: [...state.upcomingMovies, action.payload]
+                latestMovies: [...action.payload]
             }
         default:
             return {

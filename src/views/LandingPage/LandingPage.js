@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../sharedComponents/Header/Header';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Typography, Button } from '@mui/material';
 import './landingPage.css'
 import MovieCard from '../../sharedComponents/MovieCard/MovieCard';
 import { getServerData } from '../../services/api';
-import { useDispatch } from 'react-redux';
-import { getPopularMovies, getLatestMovies } from '../../redux/actionCreator/actionCreator';
+import { useDispatch, useSelector } from 'react-redux';
+import { getLatestMovies, getPopularMovies, getPopularPeople } from '../../redux/actionCreator/actionCreator';
+import { fetchMoviesReducer } from '../../redux/reducer/fetchMoviesReducer';
 
 
 const LandingPage = () => {
 
   const dispatch = useDispatch()
+  const Moviedata = useSelector(state => state.fetchMoviesReducer)
+  const peopledata = useSelector(state => state.fetchPeopleReducer)
+  console.log('main: ', peopledata);
+
 
   useEffect(() => {
+    dispatch(getPopularMovies())
     dispatch(getLatestMovies())
+    dispatch(getPopularPeople())
   }, [])
 
   return (

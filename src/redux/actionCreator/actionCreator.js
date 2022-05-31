@@ -6,7 +6,7 @@ export const getPopularMovies = () => {
     return { type: ACTION_FILTERS.SET_POPULAR_MOVIES_PENDING }
 }
 export const getLatestMovies = () => {
-    console.log('action dispatched');
+    console.log('action dispatched getLatestMovies');
     return { type: ACTION_FILTERS.SET_LATEST_MOVIES_PENDING }
 }
 export const getPopularTVshows = () => {
@@ -17,11 +17,11 @@ export const getLatestTVshows = () => {
     console.log('action dispatched');
     return { type: ACTION_FILTERS.SET_LATEST_TV_SHOWS_PENDING }
 }
-export const getPopulerPeople = () => {
+export const getPopularPeople = () => {
     console.log('action dispatched');
-    return { type: ACTION_FILTERS.SET_POPULAR_MOVIES_PENDING }
+    return { type: ACTION_FILTERS.SET_POPULAR_PEOPLE_PENDING }
 }
 export const getLatestPeople = () => {
     console.log('action dispatched');
-    return { type: ACTION_FILTERS.SET_LATEST_MOVIES_PENDING }
+    return { type: ACTION_FILTERS.SET_LATEST_PEOPLE_PENDING }
 }
