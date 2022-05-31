@@ -2,14 +2,21 @@ import { Route, Routes } from "react-router-dom";
 import LandingPage from "../views/LandingPage/LandingPage";
 import React from 'react';
 import Movies from "../views/Movies/Movies";
+import Header from "../sharedComponents/Header/Header";
+import TVshows from "../views/TVshows/TVshows";
+import People from "../views/People/People";
+
+
 
 
 
 const AppRoutes = () => {
     return (
         <Routes>
-            <Route exact path="/" element={<LandingPage />} />
-            <Route exact path="/movies" element={<Movies />} />
+            <Route exact path="/" element={<>  <Header /> <LandingPage /></>} />
+            <Route exact path="/movies" element={<>  <Header /> <Movies /></>} />
+            <Route exact path="/tv" element={<>  <Header /> <TVshows /></>} />
+            <Route exact path="/people" element={<>  <Header /> <People /></>} />
         </Routes>
     )
 }

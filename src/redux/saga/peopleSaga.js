@@ -4,22 +4,22 @@ import ACTION_FILTERS from '../app.constants';
 
 
 export function* peopleWatcher() {
-    takeEvery(ACTION_FILTERS.SET_POPULAR_PEOPLE_PENDING, setPopularPeople)
-    takeEvery(ACTION_FILTERS.SET_LATEST_PEOPLE_PENDING, setLatestpeople)
+    yield takeEvery(ACTION_FILTERS.SET_POPULAR_PEOPLE_PENDING, setPopularPeople)
+    yield takeEvery(ACTION_FILTERS.SET_LATEST_PEOPLE_PENDING, setLatestpeople)
 }
 
 
 function* setPopularPeople() {
     console.log("people saga");
 
-    const res = yield call(getServerData, 'people', 'popular')
+    const res = yield call(getServerData, 'person', 'popular', 1)
     if (res.status == 200)
         yield put({ type: ACTION_FILTERS.SET_POPULAR_PEOPLE_SUCCESS, payload: res.data.results })
 
 }
 
 function* setLatestpeople() {
-    const res = yield call(getServerData, 'people', 'latest')
+    const res = yield call(getServerData, 'person', 'latest', 1)
     if (res.status == 200)
         yield put({ type: ACTION_FILTERS.SET_POPULAR_PEOPLE_SUCCESS, payload: res.data })
 

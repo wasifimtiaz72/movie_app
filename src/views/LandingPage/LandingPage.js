@@ -5,8 +5,9 @@ import './landingPage.css'
 import MovieCard from '../../sharedComponents/MovieCard/MovieCard';
 import { getServerData } from '../../services/api';
 import { useDispatch, useSelector } from 'react-redux';
-import { getLatestMovies, getPopularMovies, getPopularPeople } from '../../redux/actionCreator/actionCreator';
+import { getLatestMovies, getPopularMovies, getPopularPeople, getPopularTVshows, getLatestTVshows } from '../../redux/actionCreator/actionCreator';
 import { fetchMoviesReducer } from '../../redux/reducer/fetchMoviesReducer';
+import { fetchTVshowsReducer } from '../../redux/reducer/fetchTVshowsReducer';
 
 
 const LandingPage = () => {
@@ -14,18 +15,21 @@ const LandingPage = () => {
   const dispatch = useDispatch()
   const Moviedata = useSelector(state => state.fetchMoviesReducer)
   const peopledata = useSelector(state => state.fetchPeopleReducer)
-  console.log('main: ', peopledata);
+  const tvdata = useSelector(state => state.fetchTVshowsReducer)
+  const peopleData = useSelector(state => state.fetchPeopleReducer)
+  console.log('main:  tv data: ', tvdata);
 
 
   useEffect(() => {
     dispatch(getPopularMovies())
     dispatch(getLatestMovies())
+    dispatch(getLatestTVshows())
+    dispatch(getPopularTVshows())
     dispatch(getPopularPeople())
   }, [])
 
   return (
     <>
-      <Header />
       <Container>
         <Box className='banner'>
           <Box className='banner-text'>
@@ -36,9 +40,7 @@ const LandingPage = () => {
         <Box mt={2}>
           <Typography variant="h4">Trending</Typography>
         </Box>
-        <Box>
-          <MovieCard />
-        </Box>
+
       </Container>
 
     </>

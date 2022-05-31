@@ -6,26 +6,25 @@ import { getPopularMovies } from "../../redux/actionCreator/actionCreator";
 import { Box, Container, Grid, Typography, Card, CardContent, FormControl, Select, InputLabel, MenuItem } from "@mui/material";
 import Layout from "../../sharedComponents/Layout/Layout";
 
-const Movies = () => {
+const TVshows = () => {
   const [category, setCategory] = useState('popular')
-  const latestMovies = useSelector(state => state.fetchMoviesReducer.latestMovies)
-  const popularMovies = useSelector(state => state.fetchMoviesReducer.popularMovies)
 
-  const handleMovieClick = (id) => {
-    console.log('clickeed', id);
-  }
-
+  const latestTVshows = useSelector(state => state.fetchTVshowsReducer.latestTVshows)
+  const popularTVshows = useSelector(state => state.fetchTVshowsReducer.popularTVshows)
 
   const handleCategory = (e) => {
     setCategory(e.target.value)
     console.log('handle Category', e);
   }
 
+  const handleTVClick = (id) => {
+    console.log('clickeed TV', id);
+  }
+
   return (
     <>
-
-      {console.log('latestMovies', latestMovies)}
-      {console.log('popularMovies', popularMovies)}
+      {console.log('latest tv ', latestTVshows)}
+      {console.log('popular tv', popularTVshows)}
       <Layout>
         <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
@@ -55,15 +54,15 @@ const Movies = () => {
           <Grid item xs={12} md={8}>
             <Grid container spacing={2}>
               {category == 'popular' ?
-                popularMovies.map(x =>
+                popularTVshows.map(x =>
                   <Grid item md={3}>
-                    <MovieCard movies={x} onClick={handleMovieClick} />
+                    <MovieCard movies={x} onClick={handleTVClick} />
                   </Grid>
                 ) :
                 category == 'latest' ?
-                  latestMovies.map(x =>
+                  latestTVshows.map(x =>
                     <Grid item md={3}>
-                      <MovieCard movies={x} onClick={handleMovieClick} />
+                      <MovieCard movies={x} onClick={handleTVClick} />
                     </Grid>
                   ) :
                   <></>
@@ -76,4 +75,4 @@ const Movies = () => {
   )
 }
 
-export default Movies
+export default TVshows
