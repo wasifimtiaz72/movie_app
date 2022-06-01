@@ -1,0 +1,7 @@
+.hoirzantal-container {
+    overflow-y: hidden;
+    overflow-x: auto;
+    display: flex;
+    /* white-space: nowrap; */
+    height: 300px;
+}

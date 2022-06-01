@@ -5,10 +5,12 @@ import MovieCard from './../../sharedComponents/MovieCard/MovieCard'
 import { getPopularMovies } from "../../redux/actionCreator/actionCreator";
 import { Box, Container, Grid, Typography, Card, CardContent, FormControl, Select, InputLabel, MenuItem } from "@mui/material";
 import Layout from "../../sharedComponents/Layout/Layout";
+import { useNavigate } from "react-router-dom";
+
 
 const TVshows = () => {
   const [category, setCategory] = useState('popular')
-
+  const navigate = useNavigate();
   const latestTVshows = useSelector(state => state.fetchTVshowsReducer.latestTVshows)
   const popularTVshows = useSelector(state => state.fetchTVshowsReducer.popularTVshows)
 
@@ -18,7 +20,7 @@ const TVshows = () => {
   }
 
   const handleTVClick = (id) => {
-    console.log('clickeed TV', id);
+    navigate(`../tv/${id}`)
   }
 
   return (

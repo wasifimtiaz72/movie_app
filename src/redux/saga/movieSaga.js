@@ -10,13 +10,13 @@ export function* movieWatcher() {
 
 function* setPopularMovies() {
     console.log("movie saaga");
-    const res = yield call(getServerData, 'movie', 'popular', 1)
+    const res = yield call(getServerData, 'movie', 'popular', 50)
     if (res.status == 200)
         yield put({ type: ACTION_FILTERS.SET_POPULAR_MOVIES_SUCCESS, payload: res.data.results })
 }
 function* setLatestMovies() {
     console.log('latest called');
-    const res = yield call(getServerData, 'movie', 'upcoming', 1)
+    const res = yield call(getServerData, 'movie', 'upcoming', 50)
     if (res.status == 200)
         yield put({ type: ACTION_FILTERS.SET_LATEST_MOVIES_SUCCESS, payload: res.data.results })
 }

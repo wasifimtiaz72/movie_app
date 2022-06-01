@@ -6,14 +6,15 @@ import PeopleCard from './../../sharedComponents/PeopleCard/PeopleCard'
 import { getPopularMovies } from "../../redux/actionCreator/actionCreator";
 import { Box, Container, Grid, Typography, Card, CardContent, FormControl, Select, InputLabel, MenuItem } from "@mui/material";
 import Layout from "../../sharedComponents/Layout/Layout";
+import { useNavigate } from "react-router-dom";
 
 const People = (props) => {
 
 
     const peopleData = useSelector(state => state.fetchPeopleReducer.popularPeople)
-
+    const navigate = useNavigate();
     const handlePeopleClick = (id) => {
-        console.log('tv click', id);
+        navigate(`../people/${id}`)
     }
     return (
         <>

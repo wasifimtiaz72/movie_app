@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getLatestMovies, getPopularMovies, getPopularPeople, getPopularTVshows, getLatestTVshows } from '../../redux/actionCreator/actionCreator';
 import { fetchMoviesReducer } from '../../redux/reducer/fetchMoviesReducer';
 import { fetchTVshowsReducer } from '../../redux/reducer/fetchTVshowsReducer';
-
+import HorizantalScroll from '../../sharedComponents/HorizantalScroll/HorizantalScroll'
 
 const LandingPage = () => {
 
@@ -30,6 +30,7 @@ const LandingPage = () => {
 
   return (
     <>
+      {console.log('movie data', Moviedata)}
       <Container>
         <Box className='banner'>
           <Box className='banner-text'>
@@ -39,8 +40,14 @@ const LandingPage = () => {
         </Box>
         <Box mt={2}>
           <Typography variant="h4">Trending</Typography>
+          <HorizantalScroll>
+            {Moviedata?.popularMovies?.map((x) =>
+              <Box>
+                <MovieCard movies={x} />
+              </Box>
+            )}
+          </HorizantalScroll>
         </Box>
-
       </Container>
 
     </>

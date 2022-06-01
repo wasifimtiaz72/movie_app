@@ -1,0 +1,16 @@
+.main-container {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+
+
+.cast-container {
+    overflow-y: hidden;
+    overflow-x: auto;
+    display: flex;
+    white-space: nowrap;
+    height: 300px;
+}
+
+.cast-item {}

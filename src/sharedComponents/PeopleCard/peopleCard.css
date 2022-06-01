@@ -1,0 +1,4 @@
+.people-title {
+    overflow-wrap: break-word;
+    width: max-content;
+}

@@ -12,14 +12,14 @@ export function* peopleWatcher() {
 function* setPopularPeople() {
     console.log("people saga");
 
-    const res = yield call(getServerData, 'person', 'popular', 1)
+    const res = yield call(getServerData, 'person', 'popular', 50)
     if (res.status == 200)
         yield put({ type: ACTION_FILTERS.SET_POPULAR_PEOPLE_SUCCESS, payload: res.data.results })
 
 }
 
 function* setLatestpeople() {
-    const res = yield call(getServerData, 'person', 'latest', 1)
+    const res = yield call(getServerData, 'person', 'latest', 50)
     if (res.status == 200)
         yield put({ type: ACTION_FILTERS.SET_POPULAR_PEOPLE_SUCCESS, payload: res.data })
 

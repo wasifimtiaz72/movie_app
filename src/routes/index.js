@@ -5,7 +5,7 @@ import Movies from "../views/Movies/Movies";
 import Header from "../sharedComponents/Header/Header";
 import TVshows from "../views/TVshows/TVshows";
 import People from "../views/People/People";
-
+import DetailedPage from "../views/DetailedPage/DetailedPage";
 
 
 
@@ -17,6 +17,7 @@ const AppRoutes = () => {
             <Route exact path="/movies" element={<>  <Header /> <Movies /></>} />
             <Route exact path="/tv" element={<>  <Header /> <TVshows /></>} />
             <Route exact path="/people" element={<>  <Header /> <People /></>} />
+            <Route exact path="/:media_type/:id" element={<>  <Header /> <DetailedPage /></>} />
         </Routes>
     )
 }

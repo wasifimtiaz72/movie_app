@@ -5,14 +5,17 @@ import MovieCard from './../../sharedComponents/MovieCard/MovieCard'
 import { getPopularMovies } from "../../redux/actionCreator/actionCreator";
 import { Box, Container, Grid, Typography, Card, CardContent, FormControl, Select, InputLabel, MenuItem } from "@mui/material";
 import Layout from "../../sharedComponents/Layout/Layout";
+import { useNavigate } from "react-router-dom";
+
 
 const Movies = () => {
   const [category, setCategory] = useState('popular')
   const latestMovies = useSelector(state => state.fetchMoviesReducer.latestMovies)
   const popularMovies = useSelector(state => state.fetchMoviesReducer.popularMovies)
+  const navigate = useNavigate();
 
   const handleMovieClick = (id) => {
-    console.log('clickeed', id);
+    navigate(`../movie/${id}`)
   }
 
 
@@ -23,9 +26,6 @@ const Movies = () => {
 
   return (
     <>
-
-      {console.log('latestMovies', latestMovies)}
-      {console.log('popularMovies', popularMovies)}
       <Layout>
         <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
@@ -57,13 +57,13 @@ const Movies = () => {
               {category == 'popular' ?
                 popularMovies.map(x =>
                   <Grid item md={3}>
-                    <MovieCard movies={x} onClick={handleMovieClick} />
+                    <MovieCard movies={x} onClick={(id) => navigate(`../movie/${id}`)} />
                   </Grid>
                 ) :
                 category == 'latest' ?
                   latestMovies.map(x =>
                     <Grid item md={3}>
-                      <MovieCard movies={x} onClick={handleMovieClick} />
+                      <MovieCard movies={x} onClick={(id) => navigate(`../movie/${id}`)} />
                     </Grid>
                   ) :
                   <></>
