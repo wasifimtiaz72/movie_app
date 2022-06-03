@@ -3,7 +3,10 @@
     padding-right: 16px;
 }
 
-
+.details-container {
+    background: 'white';
+    padding: 10;
+}
 
 .cast-container {
     overflow-y: hidden;
@@ -13,4 +16,8 @@
     height: 300px;
 }
 
-.cast-item {}
+.back {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('../../assets/images/landing_banner.jpeg');
+}

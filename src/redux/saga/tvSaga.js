@@ -11,7 +11,7 @@ export function* tvWatcher() {
 }
 
 function* setPopularTVshow() {
-    console.log("people saga");
+    ("people saga");
 
     const res = yield call(getServerData, 'tv', 'popular', 50)
     if (res.status == 200)

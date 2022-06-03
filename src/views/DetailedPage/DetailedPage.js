@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux'
 import { getDetails, getCast } from "../../services/api";
-import { getPopularMovies } from "../../redux/actionCreator/actionCreator";
-import { Box, Container, Grid, Typography, Card, CardContent, FormControl, Select, InputLabel, MenuItem } from "@mui/material";
+import { Box, Grid, Typography, CircularProgress, } from "@mui/material";
 import Layout from "../../sharedComponents/Layout/Layout";
 import PeopleCard from '../../sharedComponents/PeopleCard/PeopleCard'
 import './detailedPage.css'
-import { Route, Link, Routes, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import HorizantalScroll from "../../sharedComponents/HorizantalScroll/HorizantalScroll";
-
-
+import { useNavigate } from 'react-router-dom';
 
 
 const DetailedPage = () => {
+
   const [details, setDetails] = useState([])
   const [cast, setCast] = useState([])
+  const [loading, setLoading] = useState(true)
   const params = useParams()
+  const navigate = useNavigate();
   const { id, media_type } = params
+
+
   useEffect(() => {
     getAllDetails()
     getMediaCast()
@@ -24,8 +26,10 @@ const DetailedPage = () => {
 
   const getAllDetails = async () => {
     const res = await getDetails(media_type, id)
-    if (res.status == 200)
+    if (res.status == 200) {
       setDetails(res.data)
+      setLoading(false)
+    }
   }
   const getMediaCast = async () => {
     const res = await getCast(media_type, id)
@@ -35,9 +39,8 @@ const DetailedPage = () => {
 
   return (
     <>
-      {console.log('detail page data', cast)}
-      <Layout>
-        <Grid container spacing={3} sx={{ background: "pink", padding: 10 }}>
+      {!loading ? <Layout>
+        <Grid container spacing={3} className='details-container'>
           <Grid item xs={12} md={3}>
             <img src={"https://image.tmdb.org/t/p/original" + details?.poster_path} width='100%' height='100%' alt="" />
           </Grid>
@@ -46,7 +49,7 @@ const DetailedPage = () => {
               <Typography variant="h4" color="initial">{details?.title}</Typography>
               <p>
                 <span>{details?.release_date}</span>
-                {details?.genres?.map(x => <span>{x.name}</span>)}
+                {details?.genres?.map(x => <span key={x.id}>{x.name}</span>)}
                 <span>{details.runtime}</span>
               </p>
               <p>{details.tagline}</p>
@@ -59,8 +62,8 @@ const DetailedPage = () => {
           <Typography variant="h5" color="initial">Top Billed Cast</Typography>
           <HorizantalScroll>
             {cast?.map(x => x.profile_path &&
-              <Box>
-                <PeopleCard people={x} sx={{ width: '150px', height: '250px', padding: '0 7px' }} />
+              <Box key={x.id}>
+                <PeopleCard people={x} sx={{ width: '150px', height: '250px', padding: '0 7px' }} onClick={(id) => navigate(`../people/${id}`)} />
               </Box>
             )}
           </HorizantalScroll>
@@ -69,7 +72,12 @@ const DetailedPage = () => {
         <br />
         <br />
         <br />
-      </Layout>
+
+      </Layout> :
+        <Box sx={{ display: 'flex', justifyContent: 'center', pt: 5 }}>
+          <CircularProgress />
+        </Box>
+      }
     </>
   )
 }

@@ -2,3 +2,9 @@
     overflow-wrap: break-word;
     width: max-content;
 }
+
+@media screen and (max-width:500px) {
+    .people-title {
+        width: auto;
+    }
+}

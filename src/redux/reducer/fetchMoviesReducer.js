@@ -6,9 +6,8 @@ const initialState = {
     latestMovies: []
 }
 
-console.log('store outer', initialState);
 export const fetchMoviesReducer = (state = initialState, action) => {
-    console.log("movie reducer", action.payload);
+    ("movie reducer", action.payload);
     switch (action.type) {
         case ACTION_FILTERS.SET_POPULAR_MOVIES_SUCCESS:
             return {

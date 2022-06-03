@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux'
-import { getServerData } from "../../services/api";
+import React, { useState } from "react";
+import { useSelector } from 'react-redux'
 import MovieCard from './../../sharedComponents/MovieCard/MovieCard'
-import { getPopularMovies } from "../../redux/actionCreator/actionCreator";
-import { Box, Container, Grid, Typography, Card, CardContent, FormControl, Select, InputLabel, MenuItem } from "@mui/material";
+import { Box, Grid, Typography, Card, CardContent, FormControl, Select, InputLabel, MenuItem } from "@mui/material";
 import Layout from "../../sharedComponents/Layout/Layout";
 import { useNavigate } from "react-router-dom";
 
@@ -16,7 +14,6 @@ const TVshows = () => {
 
   const handleCategory = (e) => {
     setCategory(e.target.value)
-    console.log('handle Category', e);
   }
 
   const handleTVClick = (id) => {
@@ -25,8 +22,6 @@ const TVshows = () => {
 
   return (
     <>
-      {console.log('latest tv ', latestTVshows)}
-      {console.log('popular tv', popularTVshows)}
       <Layout>
         <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
@@ -57,13 +52,13 @@ const TVshows = () => {
             <Grid container spacing={2}>
               {category == 'popular' ?
                 popularTVshows.map(x =>
-                  <Grid item md={3}>
+                  <Grid item md={3} key={x.id}>
                     <MovieCard movies={x} onClick={handleTVClick} />
                   </Grid>
                 ) :
                 category == 'latest' ?
                   latestTVshows.map(x =>
-                    <Grid item md={3}>
+                    <Grid item md={3} key={x.id}>
                       <MovieCard movies={x} onClick={handleTVClick} />
                     </Grid>
                   ) :

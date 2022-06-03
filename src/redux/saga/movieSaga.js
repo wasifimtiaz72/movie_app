@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest, call, put, all } from "redux-saga/effects";
+import { takeEvery, call, put } from "redux-saga/effects";
 import { getServerData } from "../../services/api";
 import ACTION_FILTERS from '../app.constants';
 
@@ -9,14 +9,13 @@ export function* movieWatcher() {
 }
 
 function* setPopularMovies() {
-    console.log("movie saaga");
-    const res = yield call(getServerData, 'movie', 'popular', 50)
+    const res = yield call(getServerData, 'movie', 'popular')
     if (res.status == 200)
         yield put({ type: ACTION_FILTERS.SET_POPULAR_MOVIES_SUCCESS, payload: res.data.results })
+
 }
 function* setLatestMovies() {
-    console.log('latest called');
-    const res = yield call(getServerData, 'movie', 'upcoming', 50)
+    const res = yield call(getServerData, 'movie', 'upcoming')
     if (res.status == 200)
         yield put({ type: ACTION_FILTERS.SET_LATEST_MOVIES_SUCCESS, payload: res.data.results })
 }

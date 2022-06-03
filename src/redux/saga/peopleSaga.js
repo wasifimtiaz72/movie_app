@@ -10,7 +10,7 @@ export function* peopleWatcher() {
 
 
 function* setPopularPeople() {
-    console.log("people saga");
+    ("people saga");
 
     const res = yield call(getServerData, 'person', 'popular', 50)
     if (res.status == 200)

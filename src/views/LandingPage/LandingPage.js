@@ -1,23 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../sharedComponents/Header/Header';
-import { Box, Container, Typography, Button } from '@mui/material';
+import { Box, Container, Typography, OutlinedInput } from '@mui/material';
 import './landingPage.css'
-import MovieCard from '../../sharedComponents/MovieCard/MovieCard';
-import { getServerData } from '../../services/api';
-import { useDispatch, useSelector } from 'react-redux';
+import { getSearchResult } from '../../services/api';
+import { useDispatch } from 'react-redux';
 import { getLatestMovies, getPopularMovies, getPopularPeople, getPopularTVshows, getLatestTVshows } from '../../redux/actionCreator/actionCreator';
-import { fetchMoviesReducer } from '../../redux/reducer/fetchMoviesReducer';
-import { fetchTVshowsReducer } from '../../redux/reducer/fetchTVshowsReducer';
-import HorizantalScroll from '../../sharedComponents/HorizantalScroll/HorizantalScroll'
+import { debounce } from "lodash";
+import ListSection from './components/ListSection';
+import SearchingResults from './components/SearchingResults';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
+import { ThemeProvider } from "@mui/material/styles"
 
 const LandingPage = () => {
 
-  const dispatch = useDispatch()
-  const Moviedata = useSelector(state => state.fetchMoviesReducer)
-  const peopledata = useSelector(state => state.fetchPeopleReducer)
-  const tvdata = useSelector(state => state.fetchTVshowsReducer)
-  const peopleData = useSelector(state => state.fetchPeopleReducer)
-  console.log('main:  tv data: ', tvdata);
+  const dispatch = useDispatch();
+  let theme = createTheme({
+
+  });
+  theme = responsiveFontSizes(theme);
+
+  const [querry, setQuerry] = useState('')
+  const [searching, setSearching] = useState(false)
+  const [searchingResults, setSearchingResults] = useState([])
+
 
 
   useEffect(() => {
@@ -28,28 +33,42 @@ const LandingPage = () => {
     dispatch(getPopularPeople())
   }, [])
 
+
+  const handleQuerry = debounce(async (e) => {
+    setQuerry(e)
+    setSearching(true)
+    if (e == "")
+      setSearching(false)
+    const searchRes = await getSearchResult(e)
+    if (searchRes.status == 200)
+      setSearchingResults(searchRes.data.results)
+  }, 500)
+
+
   return (
     <>
-      {console.log('movie data', Moviedata)}
-      <Container>
-        <Box className='banner'>
-          <Box className='banner-text'>
-            <Typography variant="h3">Welcome.</Typography>
-            <Typography variant="h4">Millions of movies, TV shows and people to discover. Explore now.</Typography>
-          </Box>
-        </Box>
-        <Box mt={2}>
-          <Typography variant="h4">Trending</Typography>
-          <HorizantalScroll>
-            {Moviedata?.popularMovies?.map((x) =>
-              <Box>
-                <MovieCard movies={x} />
+      <ThemeProvider theme={theme}>
+        <Container maxWidth='xl' disableGutters={useMediaQuery(theme.breakpoints.only('xs'))}>
+          <Box className='banner'>
+            <Box className='banner-text'>
+              <Typography variant="h3">Welcome.</Typography>
+              <Typography variant="h4" className=''>Millions of movies, TV shows and people to discover. Explore now.</Typography>
+              <Box className='search-box'>
+                <OutlinedInput id="outlined-basic" sx={{ background: 'white', width: '70%', borderRadius: "25px" }} placeholder="Search" label="Outlined" variant="outlined"
+                  onChange={(e) => handleQuerry(e.target.value)} />
               </Box>
-            )}
-          </HorizantalScroll>
-        </Box>
-      </Container>
-
+            </Box>
+          </Box>
+          {!searching && <ListSection />}
+          {
+            searching && searchingResults.map((x) =>
+              <SearchingResults results={x} key={x.id} />
+            )
+          }
+          <br />
+          <br />
+        </Container >
+      </ThemeProvider>
     </>
   )
 }

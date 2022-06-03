@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Card, CardContent } from '@mui/material';
+import { Box, Typography, Card } from '@mui/material';
 import './peopleCard.css'
 
 const MovieCard = (props) => {
@@ -8,12 +8,12 @@ const MovieCard = (props) => {
 
     return (
         <>
-            <Box className='movie-card' onClick={() => props.onClick(id)} sx={props.sx}>
+            {profile_path && <Box className='movie-card' onClick={() => props.onClick(id)} sx={props.sx}>
                 <Card variant="outlined">
                     <img src={"https://image.tmdb.org/t/p/original" + profile_path} alt="" style={{ height: '100%', width: "100%" }} />
                     <Typography variant="h6" className='people-title'>{name}</Typography>
                 </Card>
-            </Box>
+            </Box>}
         </>
     )
 }

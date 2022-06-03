@@ -1,7 +1,7 @@
 import './horizantalScroll.css'
 
 import React from 'react'
-import { Box, Container, Grid, Typography, Card, CardContent, FormControl, Select, InputLabel, MenuItem } from "@mui/material";
+import { Box } from "@mui/material";
 
 const HorizantalScroll = ({ children }) => {
     return (

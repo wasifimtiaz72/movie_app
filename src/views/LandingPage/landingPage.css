@@ -10,3 +10,20 @@
     padding-top: 4rem;
     padding-left: 2rem;
 }
+
+.search-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.search-grid {
+    cursor: pointer;
+}
+
+@media screen and (max-width: 500px) {}
+
+.search-grid {
+    margin: 1rem;
+}
