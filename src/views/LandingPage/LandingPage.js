@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Container, Typography, OutlinedInput } from '@mui/material';
-import './landingPage.css'
-import { getSearchResult } from '../../services/api';
+import { Box, Container, Typography, OutlinedInput, CircularProgress } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { getLatestMovies, getPopularMovies, getPopularPeople, getPopularTVshows, getLatestTVshows } from '../../redux/actionCreator/actionCreator';
 import { debounce } from "lodash";
-import ListSection from './components/ListSection';
-import SearchingResults from './components/SearchingResults';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { ThemeProvider } from "@mui/material/styles"
+import './landingPage.css'
+import { getSearchResult } from '../../services/api';
+import { getLatestMovies, getPopularMovies, getPopularPeople, getPopularTVshows, getLatestTVshows } from '../../redux/actionCreator/actionCreator';
+import ListSection from './components/ListSection';
+import SearchingResults from './components/SearchingResults';
 
 const LandingPage = () => {
 
@@ -20,6 +20,7 @@ const LandingPage = () => {
   theme = responsiveFontSizes(theme);
 
   const [querry, setQuerry] = useState('')
+  const [loading, setLoading] = useState(false)
   const [searching, setSearching] = useState(false)
   const [searchingResults, setSearchingResults] = useState([])
 
@@ -37,11 +38,16 @@ const LandingPage = () => {
   const handleQuerry = debounce(async (e) => {
     setQuerry(e)
     setSearching(true)
-    if (e == "")
+    if (e === "")
       setSearching(false)
-    const searchRes = await getSearchResult(e)
-    if (searchRes.status == 200)
-      setSearchingResults(searchRes.data.results)
+    try {
+      const searchRes = await getSearchResult(e)
+      if (searchRes.status === 200)
+        setSearchingResults(searchRes.data.results)
+    } catch (error) {
+      setLoading(true)
+    }
+
   }, 500)
 
 
@@ -60,10 +66,12 @@ const LandingPage = () => {
             </Box>
           </Box>
           {!searching && <ListSection />}
-          {
-            searching && searchingResults.map((x) =>
-              <SearchingResults results={x} key={x.id} />
-            )
+          {!loading ? (searching && searchingResults.map((x) =>
+            <SearchingResults results={x} key={x.id} />
+          )) :
+            <Box sx={{ display: 'flex', justifyContent: 'center', pt: 5 }}>
+              <CircularProgress />
+            </Box>
           }
           <br />
           <br />

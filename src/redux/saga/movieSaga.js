@@ -9,13 +9,22 @@ export function* movieWatcher() {
 }
 
 function* setPopularMovies() {
-    const res = yield call(getServerData, 'movie', 'popular')
-    if (res.status == 200)
-        yield put({ type: ACTION_FILTERS.SET_POPULAR_MOVIES_SUCCESS, payload: res.data.results })
+    try {
+        const res = yield call(getServerData, 'movie', 'popular', 1)
+        if (res.status === 200)
+            yield put({ type: ACTION_FILTERS.SET_POPULAR_MOVIES_SUCCESS, payload: res.data.results })
+    } catch (error) {
+        yield put({ type: ACTION_FILTERS.SET_POPULAR_MOVIES_FAILURE })
+    }
 
 }
 function* setLatestMovies() {
-    const res = yield call(getServerData, 'movie', 'upcoming')
-    if (res.status == 200)
-        yield put({ type: ACTION_FILTERS.SET_LATEST_MOVIES_SUCCESS, payload: res.data.results })
+    try {
+        const res = yield call(getServerData, 'movie', 'upcoming', 1)
+        if (res.status === 200)
+            yield put({ type: ACTION_FILTERS.SET_LATEST_MOVIES_SUCCESS, payload: res.data.results })
+    } catch (error) {
+        yield put({ type: ACTION_FILTERS.SET_LATEST_MOVIES_FAILURE })
+    }
+
 }

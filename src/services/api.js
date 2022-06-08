@@ -1,4 +1,3 @@
-import axios from "axios";
 import { api } from "./axiosConfig"
 
 export const getServerData = (media_type, category, pages) => {

@@ -1,7 +1,8 @@
 import ACTION_FILTERS from '../app.constants'
 
 const initialState = [{
-    popularPeople: []
+    popularPeople: [],
+    error: false
 }]
 
 export const fetchPeopleReducer = (state = [], action) => {
@@ -11,7 +12,11 @@ export const fetchPeopleReducer = (state = [], action) => {
                 ...state,
                 popularPeople: [...action.payload]
             }
-
+        case ACTION_FILTERS.SET_POPULAR_PEOPLE_FAILURE:
+            return {
+                ...state,
+                error: true
+            }
         default:
             return {
                 ...state

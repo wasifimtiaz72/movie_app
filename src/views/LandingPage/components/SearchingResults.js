@@ -1,8 +1,8 @@
 import React from 'react';
 import { Typography, Card, Grid } from '@mui/material';
-import '../landingPage.css'
-import '../landingPage.css'
 import { useNavigate } from 'react-router-dom';
+import '../landingPage.css'
+import '../landingPage.css'
 
 const SearchingResults = (props) => {
   const navigate = useNavigate();

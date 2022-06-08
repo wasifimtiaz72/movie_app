@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getPersonDetails, getPersonCredits } from "../../services/api";
 import { Box, Grid, Typography, CircularProgress } from "@mui/material";
-import Layout from "../../sharedComponents/Layout/Layout";
 import { useParams, useNavigate } from 'react-router-dom';
+import { getPersonDetails, getPersonCredits } from "../../services/api";
+import Layout from "../../sharedComponents/Layout/Layout";
 import HorizantalScroll from "../../sharedComponents/HorizantalScroll/HorizantalScroll";
 import MovieCard from "../../sharedComponents/MovieCard/MovieCard";
 
@@ -22,16 +22,26 @@ const PeopleDetails = () => {
     }, [])
 
     const getAllDetails = async (id) => {
-        const res = await getPersonDetails(id)
-        if (res.status == 200) {
-            setPersonDetails(res.data)
-            setLoading(false)
+        try {
+            const res = await getPersonDetails(id)
+            if (res.status === 200) {
+                setPersonDetails(res.data)
+                setLoading(false)
+            }
+        } catch (error) {
+            setLoading(true)
         }
+
     }
     const getCredits = async (id) => {
-        const res = await getPersonCredits(id)
-        if (res.status == 200)
-            setCredits(res.data)
+        try {
+            const res = await getPersonCredits(id)
+            if (res.status === 200)
+                setCredits(res.data)
+        } catch (error) {
+            setLoading(true)
+        }
+
     }
 
     return (

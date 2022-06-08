@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { getDetails, getCast } from "../../services/api";
 import { Box, Grid, Typography, CircularProgress, } from "@mui/material";
+import { useParams, useNavigate } from 'react-router-dom';
+import { getDetails, getCast } from "../../services/api";
 import Layout from "../../sharedComponents/Layout/Layout";
 import PeopleCard from '../../sharedComponents/PeopleCard/PeopleCard'
 import './detailedPage.css'
-import { useParams } from 'react-router-dom';
 import HorizantalScroll from "../../sharedComponents/HorizantalScroll/HorizantalScroll";
-import { useNavigate } from 'react-router-dom';
 
 
 const DetailedPage = () => {
@@ -25,16 +24,25 @@ const DetailedPage = () => {
   }, [])
 
   const getAllDetails = async () => {
-    const res = await getDetails(media_type, id)
-    if (res.status == 200) {
-      setDetails(res.data)
-      setLoading(false)
+    try {
+      const res = await getDetails(media_type, id)
+      if (res.status === 200) {
+        setDetails(res.data)
+        setLoading(false)
+      }
+    } catch (error) {
+      setLoading(true)
     }
+
   }
   const getMediaCast = async () => {
-    const res = await getCast(media_type, id)
-    if (res.status == 200)
-      setCast(res.data.cast)
+    try {
+      const res = await getCast(media_type, id)
+      if (res.status === 200)
+        setCast(res.data.cast)
+    } catch (error) {
+      setLoading(true)
+    }
   }
 
   return (

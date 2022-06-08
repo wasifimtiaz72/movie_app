@@ -11,16 +11,25 @@ export function* tvWatcher() {
 }
 
 function* setPopularTVshow() {
-    ("people saga");
+    try {
+        const res = yield call(getServerData, 'tv', 'popular', 1)
+        if (res.status === 200)
+            yield put({ type: ACTION_FILTERS.SET_POPULAR_TV_SHOWS_SUCCESS, payload: res.data.results })
 
-    const res = yield call(getServerData, 'tv', 'popular', 50)
-    if (res.status == 200)
-        yield put({ type: ACTION_FILTERS.SET_POPULAR_TV_SHOWS_SUCCESS, payload: res.data.results })
+    } catch (error) {
+        yield put({ type: ACTION_FILTERS.SET_POPULAR_TV_SHOWS_FAILURE })
+    }
 
 }
 function* setLatestTVshow() {
-    const res = yield call(getServerData, 'tv', 'top_rated', 50)
-    if (res.status == 200)
-        yield put({ type: ACTION_FILTERS.SET_LATEST_TV_SHOWS_SUCCESS, payload: res.data.results })
+    try {
+        const res = yield call(getServerData, 'tv', 'top_rated', 1)
+        if (res.status === 200)
+            yield put({ type: ACTION_FILTERS.SET_LATEST_TV_SHOWS_SUCCESS, payload: res.data.results })
+
+    } catch (error) {
+        yield put({ type: ACTION_FILTERS.SET_LATEST_TV_SHOWS_FAILURE })
+
+    }
 
 }
