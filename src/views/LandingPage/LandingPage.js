@@ -10,7 +10,7 @@ import { getSearchResult } from '../../services/api';
 import { getLatestMovies, getPopularMovies, getPopularPeople, getPopularTVshows, getLatestTVshows } from '../../redux/actionCreator/actionCreator';
 import ListSection from './components/ListSection';
 import SearchingResults from './components/SearchingResults';
-
+import ErrorAlert from '../../sharedComponents/Alerts/ErrorAlert'
 const LandingPage = () => {
 
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const LandingPage = () => {
   theme = responsiveFontSizes(theme);
 
   const [querry, setQuerry] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
   const [searching, setSearching] = useState(false)
   const [searchingResults, setSearchingResults] = useState([])
 
@@ -45,11 +45,9 @@ const LandingPage = () => {
       if (searchRes.status === 200)
         setSearchingResults(searchRes.data.results)
     } catch (error) {
-      setLoading(true)
+      setError(true)
     }
-
   }, 500)
-
 
   return (
     <>
@@ -66,15 +64,12 @@ const LandingPage = () => {
             </Box>
           </Box>
           {!searching && <ListSection />}
-          {!loading ? (searching && searchingResults.map((x) =>
+          {searching && searchingResults.map((x) =>
             <SearchingResults results={x} key={x.id} />
-          )) :
-            <Box sx={{ display: 'flex', justifyContent: 'center', pt: 5 }}>
-              <CircularProgress />
-            </Box>
-          }
+          )}
           <br />
           <br />
+          {error && <ErrorAlert severity="error">This is an error message!/</ErrorAlert>}
         </Container >
       </ThemeProvider>
     </>

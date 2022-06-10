@@ -1,26 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import { Box, Grid, Typography, Card, CardContent, FormControl, Select, InputLabel, MenuItem, CircularProgress } from "@mui/material";
 import MovieCard from './../../sharedComponents/MovieCard/MovieCard'
 import Layout from "../../sharedComponents/Layout/Layout";
+import ErrorAlert from "../../sharedComponents/Alerts/ErrorAlert";
 
 
 const Movies = () => {
   const [category, setCategory] = useState('popular')
-  const [error, setError] = useState(false)
-  const latestMoviesStore = useSelector(state => state.fetchMoviesReducer)
-  const popularMoviesStore = useSelector(state => state.fetchMoviesReducer)
+  const latestMovies = useSelector(state => state.fetchMoviesReducer.get('latestMovies'))
+  const popularMovies = useSelector(state => state.fetchMoviesReducer.get('popularMovies'))
+  const movieError = useSelector(state => state.fetchMoviesReducer.get('error'))
   const navigate = useNavigate();
   const handleCategory = (e) => {
     setCategory(e.target.value)
   }
 
-  console.log('movie store', latestMoviesStore);
   return (
-    <>
-      {(!popularMoviesStore.error || !latestMoviesStore.error) ?
-        <Layout>
+    <>{
+      (!movieError ?
+        <Layout >
           <Grid container spacing={2}>
             <Grid item xs={12} md={4}>
               <Box>
@@ -49,13 +49,13 @@ const Movies = () => {
             <Grid item xs={12} md={8}>
               <Grid container spacing={2}>
                 {category === 'popular' ?
-                  popularMoviesStore.popularMovies.map(x =>
+                  popularMovies.map(x =>
                     <Grid item md={3} key={x.id}>
                       <MovieCard movies={x} onClick={(id) => navigate(`../movie/${id}`)} />
                     </Grid>
                   ) :
                   category === 'latest' ?
-                    latestMoviesStore.latestMovies.map(x =>
+                    latestMovies.map(x =>
                       <Grid item md={3} key={x.id}>
                         <MovieCard movies={x} onClick={(id) => navigate(`../movie/${id}`)} />
                       </Grid>
@@ -66,9 +66,9 @@ const Movies = () => {
             </Grid>
           </Grid>
         </Layout>
-        : <Box sx={{ display: 'flex', justifyContent: 'center', pt: 5 }}>
-          <CircularProgress />
-        </Box>}
+        : <ErrorAlert message="Unable to load movies" />
+      )
+    }
     </>
   )
 }

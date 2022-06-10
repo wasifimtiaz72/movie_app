@@ -6,6 +6,7 @@ import Layout from "../../sharedComponents/Layout/Layout";
 import PeopleCard from '../../sharedComponents/PeopleCard/PeopleCard'
 import './detailedPage.css'
 import HorizantalScroll from "../../sharedComponents/HorizantalScroll/HorizantalScroll";
+import ErrorAlert from "../../sharedComponents/Alerts/ErrorAlert";
 
 
 const DetailedPage = () => {
@@ -13,6 +14,7 @@ const DetailedPage = () => {
   const [details, setDetails] = useState([])
   const [cast, setCast] = useState([])
   const [loading, setLoading] = useState(true)
+  const [isError, setIsError] = useState(false)
   const params = useParams()
   const navigate = useNavigate();
   const { id, media_type } = params
@@ -31,7 +33,8 @@ const DetailedPage = () => {
         setLoading(false)
       }
     } catch (error) {
-      setLoading(true)
+      setIsError(true)
+      setLoading(false)
     }
 
   }
@@ -41,13 +44,13 @@ const DetailedPage = () => {
       if (res.status === 200)
         setCast(res.data.cast)
     } catch (error) {
-      setLoading(true)
+      setIsError(true)
     }
   }
 
   return (
     <>
-      {!loading ? <Layout>
+      {!loading && !isError ? <Layout>
         <Grid container spacing={3} className='details-container'>
           <Grid item xs={12} md={3}>
             <img src={"https://image.tmdb.org/t/p/original" + details?.poster_path} width='100%' height='100%' alt="" />
@@ -81,10 +84,10 @@ const DetailedPage = () => {
         <br />
         <br />
 
-      </Layout> :
+      </Layout> : !isError ?
         <Box sx={{ display: 'flex', justifyContent: 'center', pt: 5 }}>
           <CircularProgress />
-        </Box>
+        </Box> : <ErrorAlert message="Network Error!" />
       }
     </>
   )
